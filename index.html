@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ZoEdu · 学生社区</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <style>
+        /* ===== 全局重置 ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background: #f5f7fa;
+            color: #1a1a2e;
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+
+        /* ===== 按钮 ===== */
+        .btn {
+            display: inline-block;
+            padding: 0.45rem 1.5rem;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            cursor: pointer;
+            border: none;
+            transition: 0.2s;
+        }
+        .btn-primary {
+            background: #6366f1;
+            color: #fff;
+        }
+        .btn-primary:hover {
+            background: #4f46e5;
+        }
+        .btn-outline {
+            background: transparent;
+            border: 1.5px solid #6366f1;
+            color: #6366f1;
+        }
+        .btn-outline:hover {
+            background: #6366f1;
+            color: #fff;
+        }
+        .btn-sm {
+            padding: 0.25rem 1rem;
+            font-size: 0.8rem;
+        }
+        .btn-large {
+            padding: 0.7rem 2.5rem;
+            font-size: 1.05rem;
+        }
+
+        /* ===== 导航栏 ===== */
+        .navbar {
+            background: #fff;
+            padding: 0.7rem 0;
+            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 0.5rem 1.5rem;
+        }
+        .logo {
+            font-size: 1.4rem;
+            font-weight: 800;
+            color: #6366f1;
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+        .logo-icon {
+            font-size: 1.5rem;
+        }
+        .logo-badge {
+            font-size: 0.5rem;
+            background: #6366f1;
+            color: #fff;
+            padding: 0.1rem 0.5rem;
+            border-radius: 4px;
+            font-weight: 600;
+        }
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 1.8rem;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .nav-links a {
+            color: #4a4a6a;
+            font-weight: 500;
+            font-size: 0.9rem;
+            transition: 0.2s;
+        }
+        .nav-links a:hover {
+            color: #6366f1;
+        }
+        .nav-links a.active {
+            color: #6366f1;
+            font-weight: 600;
+        }
+        .nav-auth {
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+        }
+        .nav-auth .btn-outline {
+            border-color: #d1d5db;
+            color: #4a4a6a;
+        }
+        .nav-auth .btn-outline:hover {
+            border-color: #6366f1;
+            color: #6366f1;
+            background: transparent;
+        }
+        .nav-user {
+            color: #4a4a6a;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+        .nav-user .avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: #6366f1;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+        .nav-user .logout {
+            color: #ef4444;
+            cursor: pointer;
+            font-size: 0.8rem;
+        }
+
+        /* ===== Hero ===== */
+        .hero {
+            padding: 4rem 0 3rem;
+            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+            color: #fff;
+        }
+        .hero-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+        .hero h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            letter-spacing: -1px;
+        }
+        .hero h1 .highlight {
+            color: #fcd34d;
+        }
+        .hero p {
+            font-size: 1.2rem;
+            color: rgba(255, 255, 255, 0.85);
+            margin-top: 0.5rem;
+            max-width: 600px;
+        }
+        .hero-actions {
+            margin-top: 1.8rem;
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .hero-actions .btn-outline {
+            border-color: rgba(255, 255, 255, 0.4);
+            color: #fff;
+        }
+        .hero-actions .btn-outline:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: #fff;
+        }
+        .hero .stats {
+            display: flex;
+            gap: 3rem;
+            margin-top: 2.5rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .hero .stats .stat-item {
+            text-align: center;
+        }
+        .hero .stats .stat-number {
+            font-size: 1.8rem;
+            font-weight: 700;
+        }
+        .hero .stats .stat-label {
+            font-size: 0.85rem;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        /* ===== 功能卡片 ===== */
+        .features {
+            padding: 3rem 0;
+            background: #fff;
+        }
+        .features h2 {
+            text-align: center;
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 2rem;
+        }
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1.5rem;
+        }
+        .feature-card {
+            background: #f8fafc;
+            border-radius: 12px;
+            padding: 1.8rem 1.5rem;
+            text-align: center;
+            border: 1px solid #f1f5f9;
+            transition: 0.2s;
+        }
+        .feature-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 25px rgba(99, 102, 241, 0.08);
+            border-color: #6366f1;
+        }
+        .feature-card .icon {
+            font-size: 2.4rem;
+            margin-bottom: 0.5rem;
+        }
+        .feature-card h3 {
+            font-size: 1.05rem;
+            margin-bottom: 0.2rem;
+        }
+        .feature-card p {
+            font-size: 0.9rem;
+            color: #94a3b8;
+        }
+
+        /* ===== 最新题目 ===== */
+        .recent-problems {
+            padding: 3rem 0;
+            background: #f8fafc;
+        }
+        .recent-problems h2 {
+            text-align: center;
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 0.3rem;
+        }
+        .recent-problems .subtitle {
+            text-align: center;
+            color: #94a3b8;
+            margin-bottom: 1.5rem;
+            font-size: 0.95rem;
+        }
+        .problem-item {
+            background: #fff;
+            border-radius: 10px;
+            padding: 0.8rem 1.2rem;
+            margin-bottom: 0.6rem;
+            border: 1px solid #f1f5f9;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            transition: 0.2s;
+        }
+        .problem-item:hover {
+            border-color: #6366f1;
+            box-shadow: 0 2px 8px rgba(99, 102, 241, 0.06);
+        }
+        .problem-item .title {
+            font-weight: 500;
+            color: #1a1a2e;
+        }
+        .problem-item .title a:hover {
+            color: #6366f1;
+        }
+        .problem-item .tags {
+            display: flex;
+            gap: 0.4rem;
+            flex-wrap: wrap;
+        }
+        .tag {
+            padding: 0.05rem 0.6rem;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            font-weight: 600;
+        }
+        .tag-diff {
+            background: #ede9fe;
+            color: #5b21b6;
+        }
+        .tag-cat {
+            background: #dbeafe;
+            color: #1d4ed8;
+        }
+        .tag-src {
+            background: #fce4ec;
+            color: #c62828;
+        }
+        .problem-item .meta {
+            font-size: 0.8rem;
+            color: #94a3b8;
+        }
+
+        /* ===== 页脚 ===== */
+        .footer {
+            background: #0f172a;
+            color: #94a3b8;
+            padding: 2rem 0;
+            text-align: center;
+            font-size: 0.85rem;
+        }
+        .footer a {
+            color: #a5b4fc;
+        }
+        .footer a:hover {
+            color: #fff;
+        }
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-bottom: 0.8rem;
+            flex-wrap: wrap;
+        }
+
+        /* ===== 响应式 ===== */
+        @media (max-width: 640px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+            .hero .stats {
+                gap: 1.5rem;
+            }
+            .nav-container {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            .nav-links {
+                justify-content: center;
+            }
+            .nav-auth {
+                justify-content: center;
+            }
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+            .problem-item {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.3rem;
+            }
+            .problem-item .tags {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ===== 导航栏 ===== -->
+    <nav class="navbar">
+        <div class="container nav-container">
+            <a href="/" class="logo">
+                <span class="logo-icon">⚡</span> ZoEdu <span class="logo-badge">学生社区</span>
+            </a>
+            <ul class="nav-links">
+                <li><a href="/" class="active">首页</a></li>
+                <li><a href="/problem/list">题库</a></li>
+                <li><a href="/discuss">讨论</a></li>
+                <li><a href="/problem/solution">题解</a></li>
+            </ul>
+            <div class="nav-auth" id="navAuth">
+                <!-- JS 渲染 -->
+            </div>
+        </div>
+    </nav>
+
+    <!-- ===== Hero ===== -->
+    <section class="hero">
+        <div class="container hero-content">
+            <h1>⚡ <span class="highlight">ZoEdu</span></h1>
+            <p>学生自己做的学习小社团</p>
+            <div class="hero-actions">
+                <a href="/problem/list" class="btn btn-primary btn-large">📐 开始刷题</a>
+                <a href="/auth/login" class="btn btn-outline btn-large">登录</a>
+            </div>
+            <div class="stats">
+                <div class="stat-item">
+                    <div class="stat-number">0</div>
+                    <div class="stat-label">题目</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">0</div>
+                    <div class="stat-label">用户</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">0</div>
+                    <div class="stat-label">讨论</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">0</div>
+                    <div class="stat-label">题解</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== 功能卡片 ===== -->
+    <section class="features">
+        <div class="container">
+            <h2>🚀 来这里做什么</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="icon">📐</div>
+                    <h3>刷数学题</h3>
+                    <p>从小学奥数到 CMO，难度全覆盖</p>
+                </div>
+                <div class="feature-card">
+                    <div class="icon">💬</div>
+                    <h3>讨论交流</h3>
+                    <p>每道题都有讨论区，一起交流解法</p>
+                </div>
+                <div class="feature-card">
+                    <div class="icon">📝</div>
+                    <h3>发布题解</h3>
+                    <p>分享你的解题思路，帮助更多人</p>
+                </div>
+                <div class="feature-card">
+                    <div class="icon">👥</div>
+                    <h3>学生社区</h3>
+                    <p>全是学生，没有广告，干净纯粹</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== 最新题目 ===== -->
+    <section class="recent-problems">
+        <div class="container">
+            <h2>📋 最新题目</h2>
+            <p class="subtitle">最近发布的数学题，点击查看详情</p>
+            <div id="problemList">
+                <!-- JS 渲染 -->
+            </div>
+            <div style="text-align:center;margin-top:1rem;">
+                <a href="/problem/list" class="btn btn-outline">查看全部题目 →</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== 页脚 ===== -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-links">
+                <a href="/">首页</a>
+                <a href="/problem/list">题库</a>
+                <a href="/discuss">讨论</a>
+                <a href="https://github.com/ZoEdu-Org" target="_blank">GitHub</a>
+            </div>
+            <p>© 2026 ZoEdu · 用 ❤️ 和 💻 做的学生社团</p>
+        </div>
+    </footer>
+
+    <script>
+        // ============================================================
+        //  数据层 (localStorage)
+        // ============================================================
+        const INITIAL_ADMIN = {
+            id: 'admin_1',
+            name: 'zszl',
+            short: 'z',
+            email: '40273718@ZoEdu',
+            phone: '',
+            password: 'Admin@123456',
+            role: 'Mter',
+            slogan: 'ZoEdu 创始人'
+        };
+
+        function getUsers() {
+            try {
+                const data = localStorage.getItem('zoedu_users');
+                if (data) {
+                    const parsed = JSON.parse(data);
+                    if (!parsed.some(u => u.id === INITIAL_ADMIN.id)) {
+                        parsed.push(INITIAL_ADMIN);
+                        localStorage.setItem('zoedu_users', JSON.stringify(parsed));
+                    }
+                    return parsed;
+                }
+            } catch (e) {}
+            localStorage.setItem('zoedu_users', JSON.stringify([INITIAL_ADMIN]));
+            return [INITIAL_ADMIN];
+        }
+
+        function getCurrentUser() {
+            const data = localStorage.getItem('zoedu_current_user');
+            return data ? JSON.parse(data) : null;
+        }
+
+        function setCurrentUser(user) {
+            localStorage.setItem('zoedu_current_user', JSON.stringify(user));
+        }
+
+        function clearCurrentUser() {
+            localStorage.removeItem('zoedu_current_user');
+        }
+
+        // ============================================================
+        //  题目数据
+        // ============================================================
+        const problems = [{
+            id: 1,
+            title: '费马小定理证明',
+            category: '数论',
+            difficulty: '初联中',
+            source: '竞赛',
+            author: 'zszl',
+            comments: 5,
+            created_at: '2026-08-07'
+        }, {
+            id: 2,
+            title: '勾股定理的多种证明',
+            category: '几何',
+            difficulty: '初联易',
+            source: '经典',
+            author: '张三',
+            comments: 3,
+            created_at: '2026-08-06'
+        }, {
+            id: 3,
+            title: '费马大定理特殊情况',
+            category: '数论',
+            difficulty: 'CMO中',
+            source: '竞赛',
+            author: '李四',
+            comments: 8,
+            created_at: '2026-08-05'
+        }];
+
+        // ============================================================
+        //  渲染最新题目（首页只显示 3 道）
+        // ============================================================
+        function renderProblems(list) {
+            const container = document.getElementById('problemList');
+            if (!list || list.length === 0) {
+                container.innerHTML =
+                    `<div style="text-align:center;padding:2rem 0;color:#94a3b8;">📭 还没有题目，快来发布第一题吧！</div>`;
+                return;
+            }
+            container.innerHTML = list.slice(0, 3).map(p => `
+                <div class="problem-item">
+                    <div class="title">
+                        <a href="/problem/detail?id=${p.id}">💬 ${p.title}</a>
+                    </div>
+                    <div class="tags">
+                        <span class="tag tag-diff">${p.difficulty}</span>
+                        <span class="tag tag-cat">${p.category}</span>
+                        <span class="tag tag-src">${p.source}</span>
+                    </div>
+                    <div class="meta">
+                        👤 ${p.author} · 💬 ${p.comments} · ${p.created_at}
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // ============================================================
+        //  导航更新
+        // ============================================================
+        function updateNav() {
+            const user = getCurrentUser();
+            const auth = document.getElementById('navAuth');
+            if (user) {
+                auth.innerHTML = `
+                    <div class="nav-user">
+                        <div class="avatar">${user.name[0].toUpperCase()}</div>
+                        <span>${user.name}</span>
+                        <span class="logout" onclick="logout()">退出</span>
+                    </div>
+                `;
+            } else {
+                auth.innerHTML = `
+                    <a href="/auth/login" class="btn btn-outline btn-sm">登录</a>
+                    <a href="/auth/register" class="btn btn-primary btn-sm">注册</a>
+                `;
+            }
+        }
+
+        function logout() {
+            if (!confirm('确定要退出登录吗？')) return;
+            clearCurrentUser();
+            updateNav();
+            alert('已退出登录');
+        }
+
+        // ============================================================
+        //  初始化
+        // ============================================================
+        renderProblems(problems);
+        updateNav();
+
+        console.log('🚀 ZoEdu 首页已加载');
+        console.log('👤 默认管理员: zszl / Admin@123456');
+        console.log('📧 邮箱: 40273718@ZoEdu');
+    </script>
+
+</body>
+</html>
