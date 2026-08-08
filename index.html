@@ -6,18 +6,16 @@
     <title>ZoEdu · 学生社区</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
     <style>
-        /* ===== 全局重置 ===== */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
         body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
             background: #f5f7fa;
             color: #1a1a2e;
             line-height: 1.6;
-            min-height: 100vh;
         }
         a {
             text-decoration: none;
@@ -28,8 +26,6 @@
             margin: 0 auto;
             padding: 0 1.5rem;
         }
-
-        /* ===== 按钮 ===== */
         .btn {
             display: inline-block;
             padding: 0.45rem 1.5rem;
@@ -64,8 +60,6 @@
             padding: 0.7rem 2.5rem;
             font-size: 1.05rem;
         }
-
-        /* ===== 导航栏 ===== */
         .navbar {
             background: #fff;
             padding: 0.7rem 0;
@@ -158,8 +152,6 @@
             cursor: pointer;
             font-size: 0.8rem;
         }
-
-        /* ===== Hero ===== */
         .hero {
             padding: 4rem 0 3rem;
             background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
@@ -207,9 +199,6 @@
             flex-wrap: wrap;
             justify-content: center;
         }
-        .hero .stats .stat-item {
-            text-align: center;
-        }
         .hero .stats .stat-number {
             font-size: 1.8rem;
             font-weight: 700;
@@ -218,8 +207,6 @@
             font-size: 0.85rem;
             color: rgba(255, 255, 255, 0.7);
         }
-
-        /* ===== 功能卡片 ===== */
         .features {
             padding: 3rem 0;
             background: #fff;
@@ -232,7 +219,7 @@
         }
         .features-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
             gap: 1.5rem;
         }
         .feature-card {
@@ -260,8 +247,6 @@
             font-size: 0.9rem;
             color: #94a3b8;
         }
-
-        /* ===== 最新题目 ===== */
         .recent-problems {
             padding: 3rem 0;
             background: #f8fafc;
@@ -328,8 +313,6 @@
             font-size: 0.8rem;
             color: #94a3b8;
         }
-
-        /* ===== 页脚 ===== */
         .footer {
             background: #0f172a;
             color: #94a3b8;
@@ -350,8 +333,6 @@
             margin-bottom: 0.8rem;
             flex-wrap: wrap;
         }
-
-        /* ===== 响应式 ===== */
         @media (max-width: 640px) {
             .hero h1 {
                 font-size: 2rem;
@@ -384,8 +365,6 @@
     </style>
 </head>
 <body>
-
-    <!-- ===== 导航栏 ===== -->
     <nav class="navbar">
         <div class="container nav-container">
             <a href="/" class="logo">
@@ -396,87 +375,52 @@
                 <li><a href="/problem/list">题库</a></li>
                 <li><a href="/discuss">讨论</a></li>
                 <li><a href="/problem/solution">题解</a></li>
+                <li><a href="/ticket">工单</a></li>
             </ul>
-            <div class="nav-auth" id="navAuth">
-                <!-- JS 渲染 -->
-            </div>
+            <div class="nav-auth" id="navAuth"></div>
         </div>
     </nav>
 
-    <!-- ===== Hero ===== -->
     <section class="hero">
         <div class="container hero-content">
             <h1>⚡ <span class="highlight">ZoEdu</span></h1>
-            <p>学生自己做的学习小社团</p>
+            <p>学生自己做的教育小社团 · 用 ❤️ 和 💻</p>
             <div class="hero-actions">
                 <a href="/problem/list" class="btn btn-primary btn-large">📐 开始刷题</a>
                 <a href="/auth/login" class="btn btn-outline btn-large">登录</a>
             </div>
             <div class="stats">
-                <div class="stat-item">
-                    <div class="stat-number">0</div>
-                    <div class="stat-label">题目</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-number">0</div>
-                    <div class="stat-label">用户</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-number">0</div>
-                    <div class="stat-label">讨论</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-number">0</div>
-                    <div class="stat-label">题解</div>
-                </div>
+                <div class="stat-item"><div class="stat-number" id="statProblems">0</div><div class="stat-label">题目</div></div>
+                <div class="stat-item"><div class="stat-number" id="statUsers">0</div><div class="stat-label">用户</div></div>
+                <div class="stat-item"><div class="stat-number" id="statDiscussions">0</div><div class="stat-label">讨论</div></div>
+                <div class="stat-item"><div class="stat-number" id="statSolutions">0</div><div class="stat-label">题解</div></div>
             </div>
         </div>
     </section>
 
-    <!-- ===== 功能卡片 ===== -->
     <section class="features">
         <div class="container">
             <h2>🚀 来这里做什么</h2>
             <div class="features-grid">
-                <div class="feature-card">
-                    <div class="icon">📐</div>
-                    <h3>刷数学题</h3>
-                    <p>从小学奥数到 CMO，难度全覆盖</p>
-                </div>
-                <div class="feature-card">
-                    <div class="icon">💬</div>
-                    <h3>讨论交流</h3>
-                    <p>每道题都有讨论区，一起交流解法</p>
-                </div>
-                <div class="feature-card">
-                    <div class="icon">📝</div>
-                    <h3>发布题解</h3>
-                    <p>分享你的解题思路，帮助更多人</p>
-                </div>
-                <div class="feature-card">
-                    <div class="icon">👥</div>
-                    <h3>学生社区</h3>
-                    <p>全是学生，没有广告，干净纯粹</p>
-                </div>
+                <div class="feature-card"><div class="icon">📐</div><h3>刷数学题</h3><p>从小学奥数到 CMO</p></div>
+                <div class="feature-card"><div class="icon">💬</div><h3>讨论交流</h3><p>每道题都有讨论区</p></div>
+                <div class="feature-card"><div class="icon">📝</div><h3>发布题解</h3><p>分享你的解题思路</p></div>
+                <div class="feature-card"><div class="icon">👥</div><h3>学生社区</h3><p>全是学生，没有广告</p></div>
             </div>
         </div>
     </section>
 
-    <!-- ===== 最新题目 ===== -->
     <section class="recent-problems">
         <div class="container">
             <h2>📋 最新题目</h2>
-            <p class="subtitle">最近发布的数学题，点击查看详情</p>
-            <div id="problemList">
-                <!-- JS 渲染 -->
-            </div>
+            <p class="subtitle">最近发布的数学题</p>
+            <div id="problemList"></div>
             <div style="text-align:center;margin-top:1rem;">
                 <a href="/problem/list" class="btn btn-outline">查看全部题目 →</a>
             </div>
         </div>
     </section>
 
-    <!-- ===== 页脚 ===== -->
     <footer class="footer">
         <div class="container">
             <div class="footer-links">
@@ -497,9 +441,9 @@
             id: 'admin_1',
             name: 'zszl',
             short: 'z',
-            email: '40273718@ZoEdu',
+            email: '',
             phone: '',
-            password: 'Admin@123456',
+            password: '40273718@ZoEdu',
             role: 'Mter',
             slogan: 'ZoEdu 创始人'
         };
@@ -534,67 +478,55 @@
         }
 
         // ============================================================
-        //  题目数据
+        //  题目数据（从 localStorage 读取，用户可添加）
         // ============================================================
-        const problems = [{
-            id: 1,
-            title: '费马小定理证明',
-            category: '数论',
-            difficulty: '初联中',
-            source: '竞赛',
-            author: 'zszl',
-            comments: 5,
-            created_at: '2026-08-07'
-        }, {
-            id: 2,
-            title: '勾股定理的多种证明',
-            category: '几何',
-            difficulty: '初联易',
-            source: '经典',
-            author: '张三',
-            comments: 3,
-            created_at: '2026-08-06'
-        }, {
-            id: 3,
-            title: '费马大定理特殊情况',
-            category: '数论',
-            difficulty: 'CMO中',
-            source: '竞赛',
-            author: '李四',
-            comments: 8,
-            created_at: '2026-08-05'
-        }];
+        function getProblems() {
+            try {
+                const data = localStorage.getItem('zoedu_problems');
+                if (data) return JSON.parse(data);
+            } catch (e) {}
+            // 默认初始数据
+            const defaults = [
+                { id: 1, title: '费马小定理证明', category: '数论', difficulty: '初联中', source: '竞赛', author: 'zszl',
+                    comments: 5, created_at: '2026-08-07' },
+                { id: 2, title: '勾股定理的多种证明', category: '几何', difficulty: '初联易', source: '经典', author: '张三',
+                    comments: 3, created_at: '2026-08-06' },
+                { id: 3, title: '费马大定理特殊情况', category: '数论', difficulty: 'CMO中', source: '竞赛', author: '李四',
+                    comments: 8, created_at: '2026-08-05' }
+            ];
+            localStorage.setItem('zoedu_problems', JSON.stringify(defaults));
+            return defaults;
+        }
+
+        function saveProblems(problems) {
+            localStorage.setItem('zoedu_problems', JSON.stringify(problems));
+        }
 
         // ============================================================
-        //  渲染最新题目（首页只显示 3 道）
+        //  渲染
         // ============================================================
-        function renderProblems(list) {
+        function renderProblems() {
+            const problems = getProblems();
             const container = document.getElementById('problemList');
-            if (!list || list.length === 0) {
+            if (!problems || problems.length === 0) {
                 container.innerHTML =
                     `<div style="text-align:center;padding:2rem 0;color:#94a3b8;">📭 还没有题目，快来发布第一题吧！</div>`;
                 return;
             }
-            container.innerHTML = list.slice(0, 3).map(p => `
+            container.innerHTML = problems.slice(0, 3).map(p => `
                 <div class="problem-item">
-                    <div class="title">
-                        <a href="/problem/detail?id=${p.id}">💬 ${p.title}</a>
-                    </div>
+                    <div class="title"><a href="/problem/detail?id=${p.id}">💬 ${p.title}</a></div>
                     <div class="tags">
                         <span class="tag tag-diff">${p.difficulty}</span>
                         <span class="tag tag-cat">${p.category}</span>
                         <span class="tag tag-src">${p.source}</span>
                     </div>
-                    <div class="meta">
-                        👤 ${p.author} · 💬 ${p.comments} · ${p.created_at}
-                    </div>
+                    <div class="meta">👤 ${p.author} · 💬 ${p.comments} · ${p.created_at}</div>
                 </div>
             `).join('');
+            document.getElementById('statProblems').textContent = problems.length;
         }
 
-        // ============================================================
-        //  导航更新
-        // ============================================================
         function updateNav() {
             const user = getCurrentUser();
             const auth = document.getElementById('navAuth');
@@ -624,13 +556,15 @@
         // ============================================================
         //  初始化
         // ============================================================
-        renderProblems(problems);
+        renderProblems();
         updateNav();
 
-        console.log('🚀 ZoEdu 首页已加载');
-        console.log('👤 默认管理员: zszl / Admin@123456');
-        console.log('📧 邮箱: 40273718@ZoEdu');
-    </script>
+        // 统计用户数
+        document.getElementById('statUsers').textContent = getUsers().length;
+        document.getElementById('statDiscussions').textContent = '0';
+        document.getElementById('statSolutions').textContent = '0';
 
+        console.log('🚀 ZoEdu 首页已加载');
+    </script>
 </body>
 </html>
